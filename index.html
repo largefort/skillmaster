@@ -1,0 +1,329 @@
+<html><head><base href="." target="_blank"></head><style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+h1 {
+    grid-column: 1/-1;
+    text-align: center;
+    font-size: 2.5em;
+    color: #00fff2;
+    text-shadow: 0 0 10px rgba(0,255,242,0.3);
+    margin-bottom: 30px;
+}
+
+.resource-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    transition: transform 0.3s ease;
+}
+
+.resource-container:hover {
+    transform: translateY(-5px);
+}
+
+.resource-container h2 {
+    color: #ff7eee;
+    margin-top: 0;
+}
+
+.upgrade-btn {
+    background: linear-gradient(45deg, #ff7eee, #ff9cee);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #1a1a2e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.upgrade-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,126,238,0.5);
+}
+
+.stats {
+    font-size: 1.1em;
+    margin: 10px 0;
+    color: #7ee8ff;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(45deg, #7ee8ff, #00fff2);
+    transition: width 0.3s;
+}
+
+.prestige-btn {
+    background: linear-gradient(45deg, #ff7eee, #7ee8ff);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    color: #1a1a2e;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    grid-column: 1/-1;
+    width: fit-content;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+}
+
+.prestige-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,126,238,0.5);
+}
+
+.prestige-btn:disabled {
+    background: linear-gradient(45deg, #666, #888);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+</style>
+<body>
+<div class="container">
+    <h1>Skill Master Tycoon</h1>
+    
+    <div class="resource-container">
+        <h2>Mining</h2>
+        <div class="stats">Level: <span id="miningAmount">0</span></div>
+        <div class="stats">XP/s: <span id="miningPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="miningProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('mining')">
+            Upgrade (Cost: <span id="miningUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Woodcutting</h2>
+        <div class="stats">Level: <span id="woodcuttingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="woodcuttingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="woodcuttingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('woodcutting')">
+            Upgrade (Cost: <span id="woodcuttingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Fishing</h2>
+        <div class="stats">Level: <span id="fishingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="fishingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="fishingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('fishing')">
+            Upgrade (Cost: <span id="fishingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Crafting</h2>
+        <div class="stats">Level: <span id="craftingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="craftingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="craftingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('crafting')">
+            Upgrade (Cost: <span id="craftingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Cooking</h2>
+        <div class="stats">Level: <span id="cookingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="cookingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="cookingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('cooking')">
+            Upgrade (Cost: <span id="cookingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Smithing</h2>
+        <div class="stats">Level: <span id="smithingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="smithingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="smithingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('smithing')">
+            Upgrade (Cost: <span id="smithingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Farming</h2>
+        <div class="stats">Level: <span id="farmingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="farmingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="farmingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('farming')">
+            Upgrade (Cost: <span id="farmingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Alchemy</h2>
+        <div class="stats">Level: <span id="alchemyAmount">0</span></div>
+        <div class="stats">XP/s: <span id="alchemyPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="alchemyProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('alchemy')">
+            Upgrade (Cost: <span id="alchemyUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Magic</h2>
+        <div class="stats">Level: <span id="magicAmount">0</span></div>
+        <div class="stats">XP/s: <span id="magicPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="magicProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('magic')">
+            Upgrade (Cost: <span id="magicUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <button class="prestige-btn" id="prestigeButton" onclick="prestige()" disabled>
+        Prestige (Requires Level 50 in All Skills)
+    </button>
+</div>
+
+<script>
+const skills = ['mining', 'woodcutting', 'fishing', 'crafting', 'cooking', 'smithing', 'farming', 'alchemy', 'magic'];
+
+let game = {
+    prestigeCount: 0,
+    multiplier: 1
+};
+
+skills.forEach(skill => {
+    game[skill] = 0;
+    game[skill + 'PerSecond'] = 1;
+    game[skill + 'UpgradeCost'] = 10;
+    game[skill + 'Level'] = 1;
+});
+
+function formatNumber(num) {
+    const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
+    const order = Math.floor(Math.log10(Math.abs(num)) / 3);
+    if (order < 0) return Math.floor(num);
+    if (order >= prefixes.length) return '∞';
+    const prefix = prefixes[order];
+    const scaled = num / Math.pow(10, order * 3);
+    return Math.floor(scaled) + prefix;
+}
+
+function saveGame() {
+    localStorage.setItem('skillMasterTycoon', JSON.stringify(game));
+}
+
+function loadGame() {
+    const savedGame = localStorage.getItem('skillMasterTycoon');
+    if (savedGame) {
+        const loadedGame = JSON.parse(savedGame);
+        Object.assign(game, loadedGame);
+        skills.forEach(skill => updateSkillDisplay(skill));
+    }
+}
+
+function update() {
+    skills.forEach(skill => {
+        game[skill] += game[skill + 'PerSecond'] * game.multiplier;
+        updateSkillDisplay(skill);
+    });
+    
+    updatePrestigeButton();
+}
+
+function updateSkillDisplay(skill) {
+    document.getElementById(skill + 'Amount').textContent = formatNumber(Math.floor(game[skill]));
+    document.getElementById(skill + 'PerSecond').textContent = 
+        formatNumber(game[skill + 'PerSecond'] * game.multiplier);
+    document.getElementById(skill + 'UpgradeCost').textContent = 
+        formatNumber(Math.floor(game[skill + 'UpgradeCost']));
+    document.getElementById(skill + 'Progress').style.width = 
+        ((game[skill] % 100) / 100 * 100) + '%';
+}
+
+function upgradeProduction(skill) {
+    if (game[skill] >= game[skill + 'UpgradeCost']) {
+        game[skill] -= game[skill + 'UpgradeCost'];
+        game[skill + 'Level']++;
+        game[skill + 'PerSecond'] = Math.pow(1.5, game[skill + 'Level']);
+        game[skill + 'UpgradeCost'] *= 1.5;
+        updateSkillDisplay(skill);
+    }
+}
+
+function updatePrestigeButton() {
+    const prestigeButton = document.getElementById('prestigeButton');
+    const canPrestige = skills.every(skill => Math.floor(game[skill]) >= 50);
+    prestigeButton.disabled = !canPrestige;
+}
+
+function prestige() {
+    if (skills.every(skill => Math.floor(game[skill]) >= 50)) {
+        game.prestigeCount++;
+        game.multiplier = 1 + game.prestigeCount * 0.5;
+        
+        skills.forEach(skill => {
+            game[skill] = 0;
+            game[skill + 'Level'] = 1;
+            game[skill + 'PerSecond'] = 1;
+            game[skill + 'UpgradeCost'] = 10;
+            updateSkillDisplay(skill);
+        });
+    }
+}
+
+// Load game on startup
+loadGame();
+
+// Start game loop
+setInterval(update, 100);
+
+// Save game every 30 seconds
+setInterval(saveGame, 30000);
+</script>
+</body></html>
