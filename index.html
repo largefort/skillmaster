@@ -43,6 +43,9 @@ h1 {
 .resource-container h2 {
     color: #ff7eee;
     margin-top: 0;
+    text-align: center;
+    font-size: 1.8em;
+    text-shadow: 0 0 5px rgba(255,126,238,0.5);
 }
 
 .upgrade-btn {
@@ -67,22 +70,48 @@ h1 {
     font-size: 1.1em;
     margin: 10px 0;
     color: #7ee8ff;
+    text-align: center;
 }
 
 .progress-bar {
     width: 100%;
-    height: 12px;
+    height: 15px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    border-radius: 10px;
     overflow: hidden;
     margin: 15px 0;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.1);
 }
 
 .progress {
     width: 0%;
     height: 100%;
     background: linear-gradient(45deg, #7ee8ff, #00fff2);
-    transition: width 0.3s;
+    transition: width 0.3s ease-out;
+    position: relative;
+    box-shadow: 0 0 10px rgba(126,232,255,0.5);
+}
+
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 .prestige-btn {
@@ -224,13 +253,86 @@ h1 {
         </button>
     </div>
 
+    <div class="resource-container">
+        <h2>Archery</h2>
+        <div class="stats">Level: <span id="archeryAmount">0</span></div>
+        <div class="stats">XP/s: <span id="archeryPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="archeryProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('archery')">
+            Upgrade (Cost: <span id="archeryUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Herbology</h2>
+        <div class="stats">Level: <span id="herbologyAmount">0</span></div>
+        <div class="stats">XP/s: <span id="herbologyPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="herbologyProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('herbology')">
+            Upgrade (Cost: <span id="herbologyUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Runecrafting</h2>
+        <div class="stats">Level: <span id="runecraftingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="runecraftingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="runecraftingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('runecrafting')">
+            Upgrade (Cost: <span id="runecraftingUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Summoning</h2>
+        <div class="stats">Level: <span id="summoningAmount">0</span></div>
+        <div class="stats">XP/s: <span id="summoningPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="summoningProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('summoning')">
+            Upgrade (Cost: <span id="summoningUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Divination</h2>
+        <div class="stats">Level: <span id="divinationAmount">0</span></div>
+        <div class="stats">XP/s: <span id="divinationPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="divinationProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('divination')">
+            Upgrade (Cost: <span id="divinationUpgradeCost">10</span>)
+        </button>
+    </div>
+
+    <div class="resource-container">
+        <h2>Enchanting</h2>
+        <div class="stats">Level: <span id="enchantingAmount">0</span></div>
+        <div class="stats">XP/s: <span id="enchantingPerSecond">1</span></div>
+        <div class="progress-bar">
+            <div id="enchantingProgress" class="progress"></div>
+        </div>
+        <button class="upgrade-btn" onclick="upgradeProduction('enchanting')">
+            Upgrade (Cost: <span id="enchantingUpgradeCost">10</span>)
+        </button>
+    </div>
+
     <button class="prestige-btn" id="prestigeButton" onclick="prestige()" disabled>
         Prestige (Requires Level 50 in All Skills)
     </button>
 </div>
 
 <script>
-const skills = ['mining', 'woodcutting', 'fishing', 'crafting', 'cooking', 'smithing', 'farming', 'alchemy', 'magic'];
+const skills = ['mining', 'woodcutting', 'fishing', 'crafting', 'cooking', 'smithing', 'farming', 'alchemy', 'magic',
+                'archery', 'herbology', 'runecrafting', 'summoning', 'divination', 'enchanting'];
 
 let game = {
     prestigeCount: 0,
